@@ -20,24 +20,14 @@ export function CTASection() {
           <p className="text-gray-300 text-lg mb-8">
             Join thousands of servers already using essence to take their Discord experience to the next level.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="flex justify-center">
             <Button 
               size="lg"
               className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg shadow-lg shadow-white/20"
               asChild
             >
-              <a href="https://discord.com/api/oauth2/authorize" target="_blank" rel="noopener noreferrer">
+              <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands&redirect_uri=https://YOUR_DOMAIN/thank-you" target="_blank" rel="noopener noreferrer">
                 Add essence to Discord
-              </a>
-            </Button>
-            <Button 
-              size="lg"
-              variant="outline" 
-              className="gradient-border transition-transform hover:-translate-y-0.5 hover:shadow-lg backdrop-blur-sm shadow-lg shadow-white/10"
-              asChild
-            >
-              <a href="https://discord.gg/essencesupport" target="_blank" rel="noopener noreferrer">
-                Join Support Server
               </a>
             </Button>
           </div>
