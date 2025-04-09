@@ -13,12 +13,12 @@ export function HeroSection() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Meet <span className="gradient-text">essence</span>,<br/>
-              your ultimate Discord companion
+              Meet <span className="gradient-text">essence</span> :3<br/>
+              your furry Discord companion
             </h1>
             <p className="text-gray-300 text-lg mb-8">
-              Enhance your server with powerful moderation, fun commands, and music capabilities. 
-              The all-in-one bot designed to elevate your Discord experience.
+              Enhance your server with powerful moderation, fun commands, and music capabilities :3 
+              The all-in-one furry bot designed to make your Discord experience paw-some!
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
@@ -26,20 +26,11 @@ export function HeroSection() {
                 className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg"
                 asChild
               >
-                <a href="https://discord.com/api/oauth2/authorize" target="_blank" rel="noopener noreferrer">
-                  Add to Discord
+                <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands&redirect_uri=https://YOUR_DOMAIN/thank-you" target="_blank" rel="noopener noreferrer">
+                  Add to Discord :3
                 </a>
               </Button>
-              <Button 
-                size="lg"
-                variant="outline" 
-                className="gradient-border transition-transform hover:-translate-y-0.5 hover:shadow-lg backdrop-blur-sm"
-                asChild
-              >
-                <a href="https://discord.gg/essencesupport" target="_blank" rel="noopener noreferrer">
-                  Join Support Server
-                </a>
-              </Button>
+
             </div>
           </motion.div>
           <motion.div 

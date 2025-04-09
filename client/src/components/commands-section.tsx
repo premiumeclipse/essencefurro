@@ -188,7 +188,7 @@ export function CommandsSection() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <span className="gradient-text">Commands</span> List
+            <span className="gradient-text">Commands</span> List :3
           </motion.h2>
           <motion.p 
             className="text-gray-300 max-w-2xl mx-auto"
@@ -197,7 +197,7 @@ export function CommandsSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            Explore all the commands essence has to offer for your Discord server.
+            Explore all the paw-some commands essence has to offer for your furry Discord server :3
           </motion.p>
         </div>
         

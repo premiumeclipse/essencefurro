@@ -11,33 +11,33 @@ import { motion } from "framer-motion";
 const features = [
   {
     icon: <CloudLightning className="h-6 w-6 text-white" />,
-    title: "Advanced Moderation",
-    description: "Powerful tools to keep your server safe. Ban, kick, mute, and more with customizable auto-mod features."
+    title: "Advanced Moderation :3",
+    description: "Paw-erful tools to keep your server safe and cozy. Ban, kick, mute, and more with customizable auto-mod features :3"
   },
   {
     icon: <Music className="h-6 w-6 text-white" />,
-    title: "Music Player",
-    description: "High-quality music playback from YouTube, Spotify, and SoundCloud with playlist support and DJ controls."
+    title: "Music Player :3",
+    description: "High-quality music playback from YouTube, Spotify, and SoundCloud for those furry dance parties! With playlist support and DJ controls :3"
   },
   {
     icon: <SmilePlus className="h-6 w-6 text-white" />,
-    title: "Fun & Games",
-    description: "Keep your server entertained with memes, jokes, trivia, and mini-games that members can play together."
+    title: "Fun & Games :3",
+    description: "Keep your furry friends entertained with memes, jokes, trivia, and mini-games that everyone can enjoy together :3"
   },
   {
     icon: <Bell className="h-6 w-6 text-white" />,
-    title: "Custom Notifications",
-    description: "Set up custom notifications for your server, including welcome messages, level-ups, and event announcements."
+    title: "Custom Notifications :3",
+    description: "Set up paw-some custom notifications for your server, including welcome messages, level-ups, and event announcements :3"
   },
   {
     icon: <BarChart2 className="h-6 w-6 text-white" />,
-    title: "Server Analytics",
-    description: "Get detailed insights into your server's activity, member engagement, and growth with easy-to-read charts."
+    title: "Server Analytics :3",
+    description: "Get detailed insights into your server's activity, member engagement, and growth with easy-to-read charts and graphs :3"
   },
   {
     icon: <Paintbrush className="h-6 w-6 text-white" />,
-    title: "Custom Themes",
-    description: "Personalize your bot's appearance and responses with custom themes, colors, and message styles."
+    title: "Custom Themes :3",
+    description: "Personalize your furry bot's appearance and responses with custom themes, colors, and message styles to match your fursona :3"
   }
 ];
 
@@ -68,7 +68,7 @@ export function FeaturesSection() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            Powerful <span className="gradient-text">Features</span>
+            Paw-some <span className="gradient-text">Features</span> :3
           </motion.h2>
           <motion.p 
             className="text-gray-300 max-w-2xl mx-auto"
@@ -77,7 +77,7 @@ export function FeaturesSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            essence comes packed with all the features you need to make your Discord server amazing.
+            essence comes packed with all the furry features you need to make your Discord server amazing :3
           </motion.p>
         </div>
         

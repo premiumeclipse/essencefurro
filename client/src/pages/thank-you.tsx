@@ -28,7 +28,7 @@ export default function ThankYou() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <span className="gradient-text">Thank You</span> for Adding essence!
+            <span className="gradient-text">Thank You</span> for Adding essence! :3
           </motion.h1>
           
           <motion.p 
@@ -37,7 +37,7 @@ export default function ThankYou() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            The bot has been successfully added to your Discord server. You can now start using all the amazing features and commands to enhance your server experience.
+            The furry bot has been successfully added to your Discord server :3 You can now start using all the paw-some features and commands to enhance your server experience!
           </motion.p>
           
           <motion.div
@@ -46,7 +46,7 @@ export default function ThankYou() {
             transition={{ duration: 0.5, delay: 0.5 }}
           >
             <p className="text-gray-400 mb-8">
-              Use <code className="bg-black px-2 py-1 rounded">/help</code> in your server to see all available commands.
+              Use <code className="bg-black px-2 py-1 rounded">/help</code> in your server to see all available commands :3
             </p>
             
             <Button 
@@ -55,7 +55,7 @@ export default function ThankYou() {
               asChild
             >
               <Link href="/">
-                <ArrowLeft className="mr-2 h-4 w-4" /> Return to Homepage
+                <ArrowLeft className="mr-2 h-4 w-4" /> Return to Homepage :3
               </Link>
             </Button>
           </motion.div>

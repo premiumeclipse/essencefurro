@@ -15,10 +15,10 @@ export function CTASection() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to <span className="gradient-text">enhance</span> your Discord server?
+            Ready to <span className="gradient-text">enhance</span> your Discord server? :3
           </h2>
           <p className="text-gray-300 text-lg mb-8">
-            Join thousands of servers already using essence to take their Discord experience to the next level.
+            Join thousands of furry servers already using essence to take their Discord experience to the next level :3
           </p>
           <div className="flex justify-center">
             <Button 
@@ -27,7 +27,7 @@ export function CTASection() {
               asChild
             >
               <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands&redirect_uri=https://YOUR_DOMAIN/thank-you" target="_blank" rel="noopener noreferrer">
-                Add essence to Discord
+                Add essence to Discord :3
               </a>
             </Button>
           </div>
