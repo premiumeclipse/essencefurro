@@ -12,12 +12,12 @@ const features = [
   {
     icon: <CloudLightning className="h-6 w-6 text-white" />,
     title: "Advanced Moderation",
-    description: "Paw-erful tools to keep your server safe and cozy. Ban, kick, mute, and more with customizable auto-mod features."
+    description: "Powerful tools to keep your server safe and cozy. Ban, kick, mute, and more with customizable auto-mod features."
   },
   {
     icon: <Music className="h-6 w-6 text-white" />,
     title: "Music Player",
-    description: "High-quality music playback from YouTube, Spotify, and SoundCloud for those furry dance parties! With playlist support and DJ controls."
+    description: "High-quality music playback from YouTube, Spotify, and SoundCloud with playlist support and DJ controls."
   },
   {
     icon: <SmilePlus className="h-6 w-6 text-white" />,

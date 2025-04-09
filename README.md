@@ -46,10 +46,6 @@ npm install
 npm run dev
 ```
 
-### Admin Access
-
-The admin dashboard is accessible at `/dev-tools` with the password: `essence@2025furry`
-
 ## Project Structure
 
 - `/client` - Frontend React application

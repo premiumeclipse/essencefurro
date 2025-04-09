@@ -14,7 +14,7 @@ export function HeroSection() {
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Meet <span className="gradient-text">essence</span><br/>
-              your furry Discord companion
+              your furry Discord moderation bot!
             </h1>
             <p className="text-gray-300 text-lg mb-8">
               Welcome essence to your server! Your all in one furro bot :3<br/>
@@ -26,7 +26,7 @@ export function HeroSection() {
                 className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg"
                 asChild
               >
-                <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands&redirect_uri=https://YOUR_DOMAIN/thank-you" target="_blank" rel="noopener noreferrer">
+                <a href="https://discord.com/api/oauth2/authorize?client_id=&permissions=8&scope=bot%20applications.commands&redirect_uri=https://essencedsc.netlify.app/thank-you" target="_blank" rel="noopener noreferrer">
                   Add to Discord
                 </a>
               </Button>
