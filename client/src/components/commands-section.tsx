@@ -14,162 +14,162 @@ interface Command {
 const commands: Record<CommandCategory, Command[]> = {
   moderation: [
     {
-      name: "/ban",
+      name: ">ban",
       description: "Bans a user from the server",
-      usage: "/ban @user [reason] [delete_days]",
-      example: "/ban @user Spamming in chat 7"
+      usage: ">ban @user [reason] [delete_days]",
+      example: ">ban @user Spamming in chat 7"
     },
     {
-      name: "/kick",
+      name: ">kick",
       description: "Kicks a user from the server",
-      usage: "/kick @user [reason]",
-      example: "/kick @user Breaking server rules"
+      usage: ">kick @user [reason]",
+      example: ">kick @user Breaking server rules"
     },
     {
-      name: "/mute",
+      name: ">mute",
       description: "Mutes a user for a specified time",
-      usage: "/mute @user duration [reason]",
-      example: "/mute @user 1h Excessive caps"
+      usage: ">mute @user duration [reason]",
+      example: ">mute @user 1h Excessive caps"
     },
     {
-      name: "/warn",
+      name: ">warn",
       description: "Issues a warning to a user",
-      usage: "/warn @user reason",
-      example: "/warn @user Inappropriate language"
+      usage: ">warn @user reason",
+      example: ">warn @user Inappropriate language"
     },
     {
-      name: "/clear",
-      description: "Clears messages from a channel",
-      usage: "/clear amount [user]",
-      example: "/clear 50 @user"
+      name: ">purge",
+      description: "Removes messages from a channel",
+      usage: ">purge amount [user]",
+      example: ">purge 50 @user"
     }
   ],
   music: [
     {
-      name: "/play",
+      name: ">play",
       description: "Plays a song or adds it to the queue",
-      usage: "/play song_name or URL",
-      example: "/play Never Gonna Give You Up"
+      usage: ">play song_name or URL",
+      example: ">play Never Gonna Give You Up"
     },
     {
-      name: "/skip",
+      name: ">skip",
       description: "Skips the current song",
-      usage: "/skip",
-      example: "/skip"
+      usage: ">skip",
+      example: ">skip"
     },
     {
-      name: "/queue",
+      name: ">queue",
       description: "Shows the current music queue",
-      usage: "/queue [page]",
-      example: "/queue 2"
+      usage: ">queue [page]",
+      example: ">queue 2"
     },
     {
-      name: "/volume",
+      name: ">volume",
       description: "Adjusts the volume of the music",
-      usage: "/volume level",
-      example: "/volume 75"
+      usage: ">volume level",
+      example: ">volume 75"
     },
     {
-      name: "/stop",
+      name: ">stop",
       description: "Stops the music and clears the queue",
-      usage: "/stop",
-      example: "/stop"
+      usage: ">stop",
+      example: ">stop"
     }
   ],
   fun: [
     {
-      name: "/meme",
+      name: ">meme",
       description: "Sends a random meme",
-      usage: "/meme [category]",
-      example: "/meme dank"
+      usage: ">meme [category]",
+      example: ">meme dank"
     },
     {
-      name: "/trivia",
+      name: ">trivia",
       description: "Starts a trivia game",
-      usage: "/trivia [category] [difficulty]",
-      example: "/trivia gaming medium"
+      usage: ">trivia [category] [difficulty]",
+      example: ">trivia gaming medium"
     },
     {
-      name: "/8ball",
+      name: ">8ball",
       description: "Ask the magic 8ball a question",
-      usage: "/8ball question",
-      example: "/8ball Will I win the lottery?"
+      usage: ">8ball question",
+      example: ">8ball Will I win the lottery?"
     },
     {
-      name: "/joke",
+      name: ">joke",
       description: "Tells a random joke",
-      usage: "/joke [category]",
-      example: "/joke dad"
+      usage: ">joke [category]",
+      example: ">joke dad"
     },
     {
-      name: "/emoji",
+      name: ">emoji",
       description: "Displays a large version of an emoji",
-      usage: "/emoji emoji",
-      example: "/emoji 😂"
+      usage: ">emoji emoji",
+      example: ">emoji 😂"
     }
   ],
   utility: [
     {
-      name: "/info",
+      name: ">info",
       description: "Shows info about a user",
-      usage: "/info [@user]",
-      example: "/info @user"
+      usage: ">info [@user]",
+      example: ">info @user"
     },
     {
-      name: "/serverinfo",
+      name: ">serverinfo",
       description: "Shows info about the server",
-      usage: "/serverinfo",
-      example: "/serverinfo"
+      usage: ">serverinfo",
+      example: ">serverinfo"
     },
     {
-      name: "/avatar",
+      name: ">avatar",
       description: "Shows a user's avatar",
-      usage: "/avatar [@user]",
-      example: "/avatar @user"
+      usage: ">avatar [@user]",
+      example: ">avatar @user"
     },
     {
-      name: "/poll",
+      name: ">poll",
       description: "Creates a poll",
-      usage: "/poll question option1 option2 ...",
-      example: "/poll \"Pizza or Burgers?\" Pizza Burgers"
+      usage: ">poll question option1 option2 ...",
+      example: ">poll \"Pizza or Burgers?\" Pizza Burgers"
     },
     {
-      name: "/remind",
+      name: ">remind",
       description: "Sets a reminder",
-      usage: "/remind time message",
-      example: "/remind 3h Check the oven"
+      usage: ">remind time message",
+      example: ">remind 3h Check the oven"
     }
   ],
   settings: [
     {
-      name: "/prefix",
+      name: ">prefix",
       description: "Changes the bot prefix",
-      usage: "/prefix new_prefix",
-      example: "/prefix !"
+      usage: ">prefix new_prefix",
+      example: ">prefix !"
     },
     {
-      name: "/welcome",
+      name: ">welcome",
       description: "Sets up welcome messages",
-      usage: "/welcome channel #channel message",
-      example: "/welcome channel #welcome Hello {user}!"
+      usage: ">welcome channel #channel message",
+      example: ">welcome channel #welcome Hello {user}!"
     },
     {
-      name: "/autorole",
+      name: ">autorole",
       description: "Sets up automatic role assignment",
-      usage: "/autorole add/remove @role",
-      example: "/autorole add @Member"
+      usage: ">autorole add/remove @role",
+      example: ">autorole add @Member"
     },
     {
-      name: "/logs",
+      name: ">logs",
       description: "Sets up server logs",
-      usage: "/logs channel #channel",
-      example: "/logs channel #server-logs"
+      usage: ">logs channel #channel",
+      example: ">logs channel #server-logs"
     },
     {
-      name: "/levelup",
+      name: ">levelup",
       description: "Configures level-up notifications",
-      usage: "/levelup channel #channel",
-      example: "/levelup channel #achievements"
+      usage: ">levelup channel #channel",
+      example: ">levelup channel #achievements"
     }
   ]
 };

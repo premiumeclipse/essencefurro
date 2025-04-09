@@ -48,7 +48,7 @@ export default function ThankYou() {
             transition={{ duration: 0.5, delay: 0.5 }}
           >
             <p className="text-gray-400 mb-8">
-              Use <code className="bg-black px-2 py-1 rounded">/help</code> in your server to see all available commands
+              Use <code className="bg-black px-2 py-1 rounded">{String('>')+'help'}</code> in your server to see all available commands
             </p>
             
             <Button 
