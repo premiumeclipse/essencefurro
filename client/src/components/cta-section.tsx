@@ -26,7 +26,7 @@ export function CTASection() {
               className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg shadow-lg shadow-white/20"
               asChild
             >
-              <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands&redirect_uri=https://YOUR_DOMAIN/thank-you" target="_blank" rel="noopener noreferrer">
+              <a href="https://discord.com/oauth2/authorize?client_id=1358670250799005797&permissions=27497939970230&response_type=code&redirect_uri=https%3A%2F%2Fessencedsc.netlify.app%2Fthank-you&integration_type=0&scope=identify+bot+applications.commands" target="_blank" rel="noopener noreferrer">
                 Add essence to Discord
               </a>
             </Button>
