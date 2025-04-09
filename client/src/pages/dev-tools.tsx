@@ -5,7 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, Server, User, Bot, Code, ShieldAlert, Activity, AlertTriangle, CheckCircle, RefreshCw } from 'lucide-react';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { 
+  ArrowLeft, Server, User, Bot, Code, ShieldAlert, Activity, AlertTriangle, 
+  CheckCircle, RefreshCw, PlusSquare, AlertOctagon, Eye, Search, ChevronDown 
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -38,7 +43,8 @@ export default function DevTools() {
       description: 'Intermittent database connection issues affecting some user profile operations.',
       status: 'investigating',
       type: 'yellow',
-      timestamp: 'April 9, 2025 - 03:25 AM UTC'
+      timestamp: 'April 9, 2025 - 03:25 AM UTC',
+      public: true
     },
     {
       id: 2,
@@ -46,9 +52,17 @@ export default function DevTools() {
       description: 'Previously experienced Discord API rate limiting issues have been resolved.',
       status: 'resolved',
       type: 'green',
-      timestamp: 'April 9, 2025 - 02:15 AM UTC'
+      timestamp: 'April 9, 2025 - 02:15 AM UTC',
+      public: true
     }
   ]);
+  const [newIncident, setNewIncident] = useState({
+    title: '',
+    description: '',
+    status: 'investigating',
+    type: 'yellow',
+    public: true
+  });
   const [systemLogs, setSystemLogs] = useState(`[2025-04-09 03:27:15] [ERROR] Database connection failed: timeout after 5000ms
 [2025-04-09 03:27:20] [WARN] Reconnecting to database (attempt 1 of 5)
 [2025-04-09 03:27:25] [INFO] Database connection established
@@ -99,6 +113,78 @@ export default function DevTools() {
     toast({
       title: 'Logs Refreshed',
       description: 'System logs have been updated',
+      variant: 'default',
+    });
+  };
+  
+  const handleNewIncident = () => {
+    if (!newIncident.title || !newIncident.description) {
+      toast({
+        title: 'Validation Error',
+        description: 'Please provide both a title and description for the incident',
+        variant: 'destructive',
+      });
+      return;
+    }
+    
+    // Create a new incident with a timestamp and ID
+    const timestamp = new Date();
+    const formattedTimestamp = `${timestamp.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} - ${timestamp.getHours().toString().padStart(2, '0')}:${timestamp.getMinutes().toString().padStart(2, '0')} AM UTC`;
+    
+    const newIncidentObj = {
+      id: incidents.length > 0 ? Math.max(...incidents.map(inc => inc.id)) + 1 : 1,
+      title: newIncident.title,
+      description: newIncident.description,
+      status: newIncident.status,
+      type: newIncident.type,
+      timestamp: formattedTimestamp,
+      public: newIncident.public
+    };
+    
+    setIncidents(prev => [newIncidentObj, ...prev]);
+    
+    // Reset the form
+    setNewIncident({
+      title: '',
+      description: '',
+      status: 'investigating',
+      type: 'yellow',
+      public: true
+    });
+    
+    // Add to logs
+    const newLogEntry = `[2025-04-09 ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}] [INFO] New incident created: ${newIncidentObj.title}`;
+    setSystemLogs(prevLogs => newLogEntry + '\n' + prevLogs);
+    
+    toast({
+      title: 'Incident Created',
+      description: 'New incident has been added to the status page',
+      variant: 'default',
+    });
+  };
+  
+  const updateIncidentStatus = (id: number, newStatus: string, newType: string) => {
+    setIncidents(prev => 
+      prev.map(incident => 
+        incident.id === id 
+          ? { 
+              ...incident, 
+              status: newStatus, 
+              type: newType,
+              timestamp: `${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} - ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')} AM UTC`
+            } 
+          : incident
+      )
+    );
+    
+    // Add to logs
+    const incidentTitle = incidents.find(inc => inc.id === id)?.title || 'Unknown incident';
+    const newLogEntry = `[2025-04-09 ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}] [INFO] Incident status updated: ${incidentTitle} -> ${newStatus}`;
+    setSystemLogs(prevLogs => newLogEntry + '\n' + prevLogs);
+    
+    toast({
+      title: 'Incident Updated',
+      description: `Incident status changed to "${newStatus}"`,
       variant: 'default',
     });
   };
@@ -333,33 +419,218 @@ export default function DevTools() {
                 
                 <Card className="bg-gradient-to-br from-gray-900/80 to-black/90 backdrop-blur-sm border-gray-800/40 shadow-xl shadow-black/20">
                   <CardHeader>
-                    <CardTitle>Active Incidents</CardTitle>
+                    <div className="flex justify-between items-center">
+                      <CardTitle>Active Incidents</CardTitle>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button size="sm" className="bg-gradient-to-r from-white to-gray-300 hover:from-gray-300 hover:to-gray-400 text-black">
+                            <PlusSquare className="h-4 w-4 mr-1" /> Report Incident
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-sm border border-gray-800/40 shadow-xl shadow-black/20">
+                          <DialogHeader>
+                            <DialogTitle>Create New Incident Report</DialogTitle>
+                            <DialogDescription>
+                              Report a new service incident to notify users
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="space-y-4 py-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="incident-title">Incident Title</Label>
+                              <Input 
+                                id="incident-title" 
+                                placeholder="e.g. API Service Disruption" 
+                                className="bg-gray-900/50 border-gray-700"
+                                value={newIncident.title}
+                                onChange={(e) => setNewIncident({...newIncident, title: e.target.value})}
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="incident-description">Description</Label>
+                              <Textarea 
+                                id="incident-description" 
+                                placeholder="Describe the issue in detail..." 
+                                className="bg-gray-900/50 border-gray-700 min-h-[100px]"
+                                value={newIncident.description}
+                                onChange={(e) => setNewIncident({...newIncident, description: e.target.value})}
+                              />
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <Label htmlFor="incident-status">Status</Label>
+                                <select 
+                                  id="incident-status" 
+                                  className="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1.5"
+                                  value={newIncident.status}
+                                  onChange={(e) => {
+                                    const status = e.target.value;
+                                    let type = newIncident.type;
+                                    
+                                    // Automatically update type based on status
+                                    if (status === 'investigating') type = 'yellow';
+                                    else if (status === 'identified') type = 'orange';
+                                    else if (status === 'monitoring') type = 'blue';
+                                    else if (status === 'resolved') type = 'green';
+                                    else if (status === 'critical') type = 'red';
+                                    
+                                    setNewIncident({...newIncident, status, type});
+                                  }}
+                                >
+                                  <option value="investigating">Investigating</option>
+                                  <option value="identified">Identified</option>
+                                  <option value="monitoring">Monitoring</option>
+                                  <option value="critical">Critical</option>
+                                  <option value="resolved">Resolved</option>
+                                </select>
+                              </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="incident-visibility">Visibility</Label>
+                                <div className="flex items-center space-x-2 h-9 pt-2">
+                                  <Switch 
+                                    id="incident-public" 
+                                    checked={newIncident.public}
+                                    onCheckedChange={(checked) => setNewIncident({...newIncident, public: checked})}
+                                  />
+                                  <Label htmlFor="incident-public" className="text-sm text-gray-400">
+                                    Make publicly visible
+                                  </Label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <DialogFooter>
+                            <Button 
+                              variant="outline" 
+                              className="border-gray-700 hover:bg-gray-800"
+                              onClick={() => {
+                                setNewIncident({
+                                  title: '',
+                                  description: '',
+                                  status: 'investigating',
+                                  type: 'yellow',
+                                  public: true
+                                });
+                              }}
+                            >
+                              Cancel
+                            </Button>
+                            <Button 
+                              className="bg-gradient-to-r from-white to-gray-300 hover:from-gray-300 hover:to-gray-400 text-black"
+                              onClick={handleNewIncident}
+                            >
+                              Create Report
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
                     <CardDescription>Current issues affecting the bot</CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <div className="rounded-lg bg-yellow-500/10 border border-yellow-500/30 p-4 mb-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center">
-                          <AlertTriangle className="h-5 w-5 text-yellow-500 mr-2" />
-                          <h4 className="font-semibold text-yellow-300">Database Connection Issues</h4>
+                  <CardContent className="max-h-[400px] overflow-y-auto">
+                    {incidents.map(incident => (
+                      <div 
+                        key={incident.id} 
+                        className={`rounded-lg ${
+                          incident.type === 'yellow' ? 'bg-yellow-500/10 border-yellow-500/30' :
+                          incident.type === 'green' ? 'bg-green-500/10 border-green-500/30' :
+                          incident.type === 'red' ? 'bg-red-500/10 border-red-500/30' :
+                          incident.type === 'blue' ? 'bg-blue-500/10 border-blue-500/30' :
+                          incident.type === 'orange' ? 'bg-orange-500/10 border-orange-500/30' :
+                          'bg-gray-500/10 border-gray-500/30'
+                        } border p-4 mb-4 last:mb-0`}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center">
+                            {incident.type === 'yellow' && <AlertTriangle className="h-5 w-5 text-yellow-500 mr-2" />}
+                            {incident.type === 'green' && <CheckCircle className="h-5 w-5 text-green-500 mr-2" />}
+                            {incident.type === 'red' && <AlertOctagon className="h-5 w-5 text-red-500 mr-2" />}
+                            {incident.type === 'blue' && <Eye className="h-5 w-5 text-blue-500 mr-2" />}
+                            {incident.type === 'orange' && <Search className="h-5 w-5 text-orange-500 mr-2" />}
+                            <h4 className={`font-semibold ${
+                              incident.type === 'yellow' ? 'text-yellow-300' :
+                              incident.type === 'green' ? 'text-green-300' :
+                              incident.type === 'red' ? 'text-red-300' :
+                              incident.type === 'blue' ? 'text-blue-300' :
+                              incident.type === 'orange' ? 'text-orange-300' :
+                              'text-gray-300'
+                            }`}>{incident.title}</h4>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            {incident.public && (
+                              <Badge variant="outline" className="bg-white/10 text-white border-white/20">Public</Badge>
+                            )}
+                            <Badge variant="outline" className={`
+                              ${incident.type === 'yellow' ? 'bg-yellow-500/20 text-yellow-300 border-yellow-500/50' :
+                                incident.type === 'green' ? 'bg-green-500/20 text-green-300 border-green-500/50' :
+                                incident.type === 'red' ? 'bg-red-500/20 text-red-300 border-red-500/50' :
+                                incident.type === 'blue' ? 'bg-blue-500/20 text-blue-300 border-blue-500/50' :
+                                incident.type === 'orange' ? 'bg-orange-500/20 text-orange-300 border-orange-500/50' :
+                                'bg-gray-500/20 text-gray-300 border-gray-500/50'
+                              }`
+                            }>
+                              {incident.status.charAt(0).toUpperCase() + incident.status.slice(1)}
+                            </Badge>
+                          </div>
                         </div>
-                        <Badge variant="outline" className="bg-yellow-500/20 text-yellow-300 border-yellow-500/50">Investigating</Badge>
+                        <p className="text-gray-400 text-sm mb-2">{incident.description}</p>
+                        <div className="flex justify-between items-center">
+                          <div className="text-xs text-gray-500">
+                            {incident.status === 'resolved' ? 'Resolved: ' : 'Started: '}{incident.timestamp}
+                          </div>
+                          
+                          {incident.status !== 'resolved' && (
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="sm" className="h-7 px-2 border-gray-700 hover:bg-gray-800">
+                                  Update <ChevronDown className="h-3 w-3 ml-1" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent className="bg-gray-900 border-gray-700">
+                                <DropdownMenuItem 
+                                  className="text-yellow-300 hover:bg-gray-800 focus:bg-gray-800"
+                                  onClick={() => updateIncidentStatus(incident.id, 'investigating', 'yellow')}
+                                >
+                                  <AlertTriangle className="h-4 w-4 mr-2" /> Investigating
+                                </DropdownMenuItem>
+                                <DropdownMenuItem 
+                                  className="text-orange-300 hover:bg-gray-800 focus:bg-gray-800"
+                                  onClick={() => updateIncidentStatus(incident.id, 'identified', 'orange')}
+                                >
+                                  <Search className="h-4 w-4 mr-2" /> Identified
+                                </DropdownMenuItem>
+                                <DropdownMenuItem 
+                                  className="text-blue-300 hover:bg-gray-800 focus:bg-gray-800"
+                                  onClick={() => updateIncidentStatus(incident.id, 'monitoring', 'blue')}
+                                >
+                                  <Eye className="h-4 w-4 mr-2" /> Monitoring
+                                </DropdownMenuItem>
+                                <DropdownMenuItem 
+                                  className="text-red-300 hover:bg-gray-800 focus:bg-gray-800"
+                                  onClick={() => updateIncidentStatus(incident.id, 'critical', 'red')}
+                                >
+                                  <AlertOctagon className="h-4 w-4 mr-2" /> Critical
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator className="bg-gray-700" />
+                                <DropdownMenuItem 
+                                  className="text-green-300 hover:bg-gray-800 focus:bg-gray-800"
+                                  onClick={() => updateIncidentStatus(incident.id, 'resolved', 'green')}
+                                >
+                                  <CheckCircle className="h-4 w-4 mr-2" /> Resolved
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          )}
+                        </div>
                       </div>
-                      <p className="text-gray-400 text-sm mb-2">Intermittent database connection issues affecting some user profile operations.</p>
-                      <div className="text-xs text-gray-500">Started: April 9, 2025 - 03:25 AM UTC</div>
-                    </div>
+                    ))}
                     
-                    <div className="rounded-lg bg-green-500/10 border border-green-500/30 p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center">
-                          <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-                          <h4 className="font-semibold text-green-300">API Rate Limiting Resolved</h4>
-                        </div>
-                        <Badge variant="outline" className="bg-green-500/20 text-green-300 border-green-500/50">Resolved</Badge>
+                    {incidents.length === 0 && (
+                      <div className="text-center py-10">
+                        <CheckCircle className="h-12 w-12 mx-auto text-green-500 mb-3 opacity-50" />
+                        <p className="text-gray-400">No active incidents reported</p>
+                        <p className="text-gray-500 text-sm mt-1">All systems are operational</p>
                       </div>
-                      <p className="text-gray-400 text-sm mb-2">Previously experienced Discord API rate limiting issues have been resolved.</p>
-                      <div className="text-xs text-gray-500">Resolved: April 9, 2025 - 02:15 AM UTC</div>
-                    </div>
+                    )}
                   </CardContent>
                 </Card>
                 
