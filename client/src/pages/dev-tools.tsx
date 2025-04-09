@@ -117,7 +117,7 @@ export default function DevTools() {
     });
   };
   
-  const handleNewIncident = () => {
+  const handleNewIncident = async () => {
     if (!newIncident.title || !newIncident.description) {
       toast({
         title: 'Validation Error',
@@ -127,66 +127,83 @@ export default function DevTools() {
       return;
     }
     
-    // Create a new incident with a timestamp and ID
-    const timestamp = new Date();
-    const formattedTimestamp = `${timestamp.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} - ${timestamp.getHours().toString().padStart(2, '0')}:${timestamp.getMinutes().toString().padStart(2, '0')} AM UTC`;
-    
-    const newIncidentObj = {
-      id: incidents.length > 0 ? Math.max(...incidents.map(inc => inc.id)) + 1 : 1,
-      title: newIncident.title,
-      description: newIncident.description,
-      status: newIncident.status,
-      type: newIncident.type,
-      timestamp: formattedTimestamp,
-      public: newIncident.public
-    };
-    
-    setIncidents(prev => [newIncidentObj, ...prev]);
-    
-    // Reset the form
-    setNewIncident({
-      title: '',
-      description: '',
-      status: 'investigating',
-      type: 'yellow',
-      public: true
-    });
-    
-    // Add to logs
-    const newLogEntry = `[2025-04-09 ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}] [INFO] New incident created: ${newIncidentObj.title}`;
-    setSystemLogs(prevLogs => newLogEntry + '\n' + prevLogs);
-    
-    toast({
-      title: 'Incident Created',
-      description: 'New incident has been added to the status page',
-      variant: 'default',
-    });
+    try {
+      const response = await apiRequest('POST', '/api/incidents', newIncident);
+      
+      if (response.ok) {
+        const createdIncident = await response.json();
+        
+        // Update the local state with the new incident from the server
+        setIncidents(prev => [createdIncident, ...prev]);
+        
+        // Reset the form
+        setNewIncident({
+          title: '',
+          description: '',
+          status: 'investigating',
+          type: 'yellow',
+          public: true
+        });
+        
+        // Add to logs
+        const newLogEntry = `[2025-04-09 ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}] [INFO] New incident created: ${createdIncident.title}`;
+        setSystemLogs(prevLogs => newLogEntry + '\n' + prevLogs);
+        
+        toast({
+          title: 'Incident Created',
+          description: 'New incident has been added to the status page',
+          variant: 'default',
+        });
+      } else {
+        throw new Error('Failed to create incident');
+      }
+    } catch (error) {
+      console.error('Error creating incident:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to create the incident. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
   
-  const updateIncidentStatus = (id: number, newStatus: string, newType: string) => {
-    setIncidents(prev => 
-      prev.map(incident => 
-        incident.id === id 
-          ? { 
-              ...incident, 
-              status: newStatus, 
-              type: newType,
-              timestamp: `${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} - ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')} AM UTC`
-            } 
-          : incident
-      )
-    );
-    
-    // Add to logs
-    const incidentTitle = incidents.find(inc => inc.id === id)?.title || 'Unknown incident';
-    const newLogEntry = `[2025-04-09 ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}] [INFO] Incident status updated: ${incidentTitle} -> ${newStatus}`;
-    setSystemLogs(prevLogs => newLogEntry + '\n' + prevLogs);
-    
-    toast({
-      title: 'Incident Updated',
-      description: `Incident status changed to "${newStatus}"`,
-      variant: 'default',
-    });
+  const updateIncidentStatus = async (id: number, newStatus: string, newType: string) => {
+    try {
+      const response = await apiRequest('PATCH', `/api/incidents/${id}`, {
+        status: newStatus,
+        type: newType
+      });
+      
+      if (response.ok) {
+        const updatedIncident = await response.json();
+        
+        setIncidents(prev => 
+          prev.map(incident => 
+            incident.id === id ? updatedIncident : incident
+          )
+        );
+        
+        // Add to logs
+        const incidentTitle = incidents.find(inc => inc.id === id)?.title || 'Unknown incident';
+        const newLogEntry = `[2025-04-09 ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}] [INFO] Incident status updated: ${incidentTitle} -> ${newStatus}`;
+        setSystemLogs(prevLogs => newLogEntry + '\n' + prevLogs);
+        
+        toast({
+          title: 'Incident Updated',
+          description: `Incident status changed to "${newStatus}"`,
+          variant: 'default',
+        });
+      } else {
+        throw new Error('Failed to update incident');
+      }
+    } catch (error) {
+      console.error('Error updating incident:', error);
+      toast({
+        title: 'Update Failed',
+        description: 'Could not update incident status',
+        variant: 'destructive',
+      });
+    }
   };
 
   const updateStats = async (field: string, value: number) => {
@@ -212,6 +229,25 @@ export default function DevTools() {
     }
   };
 
+  // Fetch the incidents
+  useEffect(() => {
+    if (isAuthorized) {
+      const fetchIncidents = async () => {
+        try {
+          const response = await apiRequest('GET', '/api/incidents/all');
+          if (response.ok) {
+            const data = await response.json();
+            setIncidents(data);
+          }
+        } catch (error) {
+          console.error('Failed to fetch incidents:', error);
+        }
+      };
+      
+      fetchIncidents();
+    }
+  }, [isAuthorized]);
+  
   // Fetch the current stats
   useEffect(() => {
     if (isAuthorized) {
