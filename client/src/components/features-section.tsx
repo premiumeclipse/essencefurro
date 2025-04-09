@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 
 const features = [
   {
-    icon: <CloudLightning className="h-6 w-6 text-pink-500" />,
+    icon: <CloudLightning className="h-6 w-6 text-[#5865F2]" />,
     title: "Advanced Moderation",
     description: "Powerful tools to keep your server safe. Ban, kick, mute, and more with customizable auto-mod features."
   },
@@ -20,7 +20,7 @@ const features = [
     description: "High-quality music playback from YouTube, Spotify, and SoundCloud with playlist support and DJ controls."
   },
   {
-    icon: <SmilePlus className="h-6 w-6 text-pink-500" />,
+    icon: <SmilePlus className="h-6 w-6 text-[#5865F2]" />,
     title: "Fun & Games",
     description: "Keep your server entertained with memes, jokes, trivia, and mini-games that members can play together."
   },
@@ -30,7 +30,7 @@ const features = [
     description: "Set up custom notifications for your server, including welcome messages, level-ups, and event announcements."
   },
   {
-    icon: <BarChart2 className="h-6 w-6 text-pink-500" />,
+    icon: <BarChart2 className="h-6 w-6 text-[#5865F2]" />,
     title: "Server Analytics",
     description: "Get detailed insights into your server's activity, member engagement, and growth with easy-to-read charts."
   },
@@ -58,7 +58,7 @@ const item = {
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="py-16 bg-gray-900">
+    <section id="features" className="py-16 bg-gradient-to-b from-[#0f0f19] to-[#0d0d17]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <motion.h2 
@@ -68,7 +68,7 @@ export function FeaturesSection() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            Powerful Features
+            Powerful <span className="gradient-text">Features</span>
           </motion.h2>
           <motion.p 
             className="text-gray-300 max-w-2xl mx-auto"
@@ -91,10 +91,10 @@ export function FeaturesSection() {
           {features.map((feature, index) => (
             <motion.div 
               key={index}
-              className="bg-black rounded-xl p-6 border border-gray-800 flex flex-col h-full transition-transform hover:-translate-y-1 duration-300"
+              className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800/40 flex flex-col h-full transition-all duration-300 card-gradient-hover hover:-translate-y-1 hover:shadow-lg hover:shadow-[#5865F2]/5"
               variants={item}
             >
-              <div className="rounded-full bg-[#5865F2]/10 p-3 w-12 h-12 flex items-center justify-center mb-4">
+              <div className="rounded-full bg-gradient-to-br from-[#5865F2]/20 to-pink-500/20 p-3 w-12 h-12 flex items-center justify-center mb-4">
                 {feature.icon}
               </div>
               <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
@@ -102,7 +102,7 @@ export function FeaturesSection() {
                 {feature.description}
               </p>
               <div className="mt-auto">
-                <a href="#commands" className="text-pink-500 hover:underline text-sm flex items-center">
+                <a href="#commands" className="gradient-text hover:opacity-80 transition-opacity text-sm flex items-center">
                   Learn more
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />

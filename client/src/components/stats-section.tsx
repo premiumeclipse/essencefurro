@@ -29,7 +29,7 @@ export function StatsSection() {
   ];
 
   return (
-    <section id="stats" className="py-16 bg-gray-900">
+    <section id="stats" className="py-16 bg-gradient-to-b from-[#0d0d17] to-[#0f0f19]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <motion.h2 
@@ -39,7 +39,7 @@ export function StatsSection() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            Bot Statistics
+            Bot <span className="gradient-text">Statistics</span>
           </motion.h2>
           <motion.p 
             className="text-gray-300 max-w-2xl mx-auto"
@@ -56,7 +56,7 @@ export function StatsSection() {
           {statItems.map((item, index) => (
             <motion.div
               key={index}
-              className="bg-black rounded-xl p-6 border border-gray-800 text-center transition-transform hover:scale-105 duration-300"
+              className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800/40 text-center transition-all hover:shadow-lg hover:shadow-[#5865F2]/5 hover:scale-105 duration-300"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -65,9 +65,9 @@ export function StatsSection() {
               {isLoading ? (
                 <Skeleton className="h-12 w-1/2 mx-auto mb-2" />
               ) : (
-                <Counter value={item.value} className="text-pink-500" />
+                <Counter value={item.value} className="gradient-text" />
               )}
-              <p className="text-gray-300 mt-2">{item.label}</p>
+              <p className="text-gray-300 mt-2 font-medium">{item.label}</p>
             </motion.div>
           ))}
         </div>

@@ -178,7 +178,7 @@ export function CommandsSection() {
   const [activeCategory, setActiveCategory] = useState<CommandCategory>("moderation");
 
   return (
-    <section id="commands" className="py-16">
+    <section id="commands" className="py-16 hero-gradient">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <motion.h2 
@@ -188,7 +188,7 @@ export function CommandsSection() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            Commands List
+            <span className="gradient-text">Commands</span> List
           </motion.h2>
           <motion.p 
             className="text-gray-300 max-w-2xl mx-auto"
@@ -202,21 +202,21 @@ export function CommandsSection() {
         </div>
         
         <motion.div 
-          className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800"
+          className="bg-gradient-to-br from-gray-900/80 to-black/90 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800/40 shadow-xl shadow-black/20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
           {/* Command Category Tabs */}
-          <div className="flex overflow-x-auto border-b border-gray-800">
+          <div className="flex overflow-x-auto border-b border-gray-800/50">
             {(Object.keys(commands) as CommandCategory[]).map((category) => (
               <button
                 key={category}
                 className={cn(
-                  "px-6 py-4 font-medium whitespace-nowrap",
+                  "px-6 py-4 font-medium whitespace-nowrap transition-all duration-200",
                   activeCategory === category
-                    ? "bg-[#5865F2] text-white"
+                    ? "bg-gradient-to-r from-[#5865F2] to-[#4752c4] text-white"
                     : "bg-transparent text-gray-400 hover:text-gray-200 hover:bg-gray-800/50"
                 )}
                 onClick={() => setActiveCategory(category)}
@@ -232,8 +232,8 @@ export function CommandsSection() {
               <div 
                 key={index} 
                 className={cn(
-                  "p-4 flex flex-col md:flex-row md:items-center transition-colors hover:bg-gray-800/50",
-                  index !== commands[activeCategory].length - 1 && "border-b border-gray-800"
+                  "p-4 flex flex-col md:flex-row md:items-center transition-all duration-200 card-gradient-hover",
+                  index !== commands[activeCategory].length - 1 && "border-b border-gray-800/30"
                 )}
               >
                 <div className="md:w-1/3">
@@ -242,7 +242,7 @@ export function CommandsSection() {
                 </div>
                 <div className="md:w-2/3 mt-2 md:mt-0">
                   <p className="text-gray-300">
-                    <span className="text-pink-500">{command.name}</span>{" "}
+                    <span className="gradient-text font-semibold">{command.name}</span>{" "}
                     {command.usage.slice(command.name.length).split(" ").map((part, i) => {
                       if (part.startsWith("[") && part.endsWith("]")) {
                         return <span key={i} className="text-gray-400 italic">{part} </span>;

@@ -9,5 +9,38 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    background: linear-gradient(to bottom, #000000, #0f0f19);
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#5865F2] to-pink-500;
+  }
+  
+  .gradient-border {
+    @apply border border-transparent bg-origin-border relative;
+    position: relative;
+  }
+  
+  .gradient-border::before {
+    content: "";
+    @apply absolute inset-0 rounded-[inherit] p-[1px] bg-gradient-to-r from-[#5865F2] to-pink-500 -z-10;
+    margin: -1px;
+  }
+  
+  .hero-gradient {
+    background: radial-gradient(circle at top left, rgba(88, 101, 242, 0.15), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.15), transparent 30%);
+  }
+  
+  .card-gradient-hover {
+    background-size: 200% 200%;
+    transition: all 0.3s ease;
+  }
+  
+  .card-gradient-hover:hover {
+    background-image: linear-gradient(45deg, rgba(88, 101, 242, 0.1), rgba(236, 72, 153, 0.1));
+    background-position: 100% 100%;
   }
 }
