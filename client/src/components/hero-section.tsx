@@ -13,12 +13,12 @@ export function HeroSection() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Meet <span className="gradient-text">essence</span> :3<br/>
+              Meet <span className="gradient-text">essence</span><br/>
               your furry Discord companion
             </h1>
             <p className="text-gray-300 text-lg mb-8">
-              Enhance your server with powerful moderation, fun commands, and music capabilities :3 
-              The all-in-one furry bot designed to make your Discord experience paw-some!
+              Welcome essence to your server! Your all in one furro bot :3<br/>
+              Enhance your server with powerful moderation, fun commands, and music capabilities.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
@@ -27,7 +27,7 @@ export function HeroSection() {
                 asChild
               >
                 <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands&redirect_uri=https://YOUR_DOMAIN/thank-you" target="_blank" rel="noopener noreferrer">
-                  Add to Discord :3
+                  Add to Discord
                 </a>
               </Button>
 
