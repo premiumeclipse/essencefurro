@@ -6,6 +6,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { apiRequest } from '@/lib/queryClient';
+import { useToast } from "@/hooks/use-toast";
 import { z } from 'zod';
 
 type IncidentType = {
@@ -28,10 +29,15 @@ export function StatusSection() {
     const fetchIncidents = async () => {
       try {
         setLoading(true);
-        const response = await apiRequest('GET', '/api/incidents');
+        console.log('Fetching public incidents...');
         
-        if (response.ok) {
-          const data = await response.json();
+        const response = await fetch('/api/incidents');
+        console.log('Incidents response status:', response.status);
+        
+        let data = [];
+        try {
+          data = await response.json();
+          console.log('Fetched incidents data:', data);
           setIncidents(data);
           
           // Set overall status based on incidents
@@ -41,6 +47,14 @@ export function StatusSection() {
             setOverallStatus('degraded');
           } else {
             setOverallStatus('operational');
+          }
+        } catch (parseError) {
+          console.error('Error parsing incidents response:', parseError);
+          try {
+            const textResponse = await response.text();
+            console.log('Raw incidents response:', textResponse);
+          } catch (e) {
+            console.error('Could not get raw response text:', e);
           }
         }
       } catch (error) {

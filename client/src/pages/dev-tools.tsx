@@ -128,13 +128,33 @@ export default function DevTools() {
     }
     
     try {
-      const response = await apiRequest('POST', '/api/incidents', newIncident);
+      // Log the data we're sending
+      console.log('Creating new incident with data:', newIncident);
+      
+      const response = await fetch('/api/incidents', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newIncident)
+      });
+      
+      console.log('Response status:', response.status);
+      
+      // Get response data
+      let responseData;
+      try {
+        responseData = await response.json();
+        console.log('Response data:', responseData);
+      } catch (parseError) {
+        console.error('Error parsing response:', parseError);
+        const textResponse = await response.text();
+        console.log('Raw response:', textResponse);
+      }
       
       if (response.ok) {
-        const createdIncident = await response.json();
-        
         // Update the local state with the new incident from the server
-        setIncidents(prev => [createdIncident, ...prev]);
+        if (responseData) {
+          setIncidents(prev => [responseData, ...prev]);
+        }
         
         // Reset the form
         setNewIncident({
@@ -146,7 +166,7 @@ export default function DevTools() {
         });
         
         // Add to logs
-        const newLogEntry = `[2025-04-09 ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}] [INFO] New incident created: ${createdIncident.title}`;
+        const newLogEntry = `[2025-04-09 ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}] [INFO] New incident created: ${responseData.title}`;
         setSystemLogs(prevLogs => newLogEntry + '\n' + prevLogs);
         
         toast({
@@ -169,19 +189,39 @@ export default function DevTools() {
   
   const updateIncidentStatus = async (id: number, newStatus: string, newType: string) => {
     try {
-      const response = await apiRequest('PATCH', `/api/incidents/${id}`, {
-        status: newStatus,
-        type: newType
+      console.log(`Updating incident ${id} with status: ${newStatus}, type: ${newType}`);
+      
+      const response = await fetch(`/api/incidents/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          status: newStatus,
+          type: newType
+        })
       });
       
+      console.log('Response status:', response.status);
+      
+      // Get response data
+      let responseData;
+      try {
+        responseData = await response.json();
+        console.log('Response data:', responseData);
+      } catch (parseError) {
+        console.error('Error parsing response:', parseError);
+        const textResponse = await response.text();
+        console.log('Raw response:', textResponse);
+      }
+      
       if (response.ok) {
-        const updatedIncident = await response.json();
-        
-        setIncidents(prev => 
-          prev.map(incident => 
-            incident.id === id ? updatedIncident : incident
-          )
-        );
+        // Update the local state with the updated incident from the server
+        if (responseData) {
+          setIncidents(prev => 
+            prev.map(incident => 
+              incident.id === id ? responseData : incident
+            )
+          );
+        }
         
         // Add to logs
         const incidentTitle = incidents.find(inc => inc.id === id)?.title || 'Unknown incident';
@@ -208,9 +248,26 @@ export default function DevTools() {
 
   const updateStats = async (field: string, value: number) => {
     try {
-      const response = await apiRequest('POST', '/api/stats', { 
-        [field]: value 
+      console.log(`Updating stats field ${field} to value ${value}`);
+      
+      const response = await fetch('/api/stats', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ [field]: value })
       });
+      
+      console.log('Stats update response status:', response.status);
+      
+      // Get response data
+      let responseData;
+      try {
+        responseData = await response.json();
+        console.log('Stats update response data:', responseData);
+      } catch (parseError) {
+        console.error('Error parsing stats update response:', parseError);
+        const textResponse = await response.text();
+        console.log('Raw stats update response:', textResponse);
+      }
       
       if (response.ok) {
         setStats(prev => ({ ...prev, [field]: value }));
@@ -219,8 +276,11 @@ export default function DevTools() {
           description: `${field} value has been updated to ${value}`,
           variant: 'default',
         });
+      } else {
+        throw new Error('Failed to update stats');
       }
     } catch (error) {
+      console.error('Error updating stats:', error);
       toast({
         title: 'Update Failed',
         description: 'Could not update stats',
@@ -234,10 +294,18 @@ export default function DevTools() {
     if (isAuthorized) {
       const fetchIncidents = async () => {
         try {
-          const response = await apiRequest('GET', '/api/incidents/all');
-          if (response.ok) {
+          console.log('Fetching all incidents...');
+          const response = await fetch('/api/incidents/all');
+          console.log('Response status:', response.status);
+          
+          try {
             const data = await response.json();
+            console.log('Fetched incidents:', data);
             setIncidents(data);
+          } catch (parseError) {
+            console.error('Error parsing incidents response:', parseError);
+            const textResponse = await response.text();
+            console.log('Raw response:', textResponse);
           }
         } catch (error) {
           console.error('Failed to fetch incidents:', error);
@@ -253,14 +321,22 @@ export default function DevTools() {
     if (isAuthorized) {
       const fetchStats = async () => {
         try {
-          const response = await apiRequest('GET', '/api/stats');
-          if (response.ok) {
+          console.log('Fetching bot stats...');
+          const response = await fetch('/api/stats');
+          console.log('Stats response status:', response.status);
+          
+          try {
             const data = await response.json();
+            console.log('Fetched stats:', data);
             setStats({
               servers: data.servers,
               users: data.users,
               commandsRun: data.commandsRun,
             });
+          } catch (parseError) {
+            console.error('Error parsing stats response:', parseError);
+            const textResponse = await response.text();
+            console.log('Raw stats response:', textResponse);
           }
         } catch (error) {
           console.error('Failed to fetch stats:', error);
