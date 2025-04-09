@@ -216,7 +216,7 @@ export function CommandsSection() {
                 className={cn(
                   "px-6 py-4 font-medium whitespace-nowrap transition-all duration-200",
                   activeCategory === category
-                    ? "bg-gradient-to-r from-[#5865F2] to-[#4752c4] text-white"
+                    ? "bg-gradient-to-r from-white to-gray-500 text-black"
                     : "bg-transparent text-gray-400 hover:text-gray-200 hover:bg-gray-800/50"
                 )}
                 onClick={() => setActiveCategory(category)}
@@ -247,7 +247,7 @@ export function CommandsSection() {
                       if (part.startsWith("[") && part.endsWith("]")) {
                         return <span key={i} className="text-gray-400 italic">{part} </span>;
                       }
-                      return <span key={i} className="text-[#5865F2]">{part} </span>;
+                      return <span key={i} className="text-white">{part} </span>;
                     })}
                   </p>
                   <p className="text-sm text-gray-400 mt-1">Example: {command.example}</p>

@@ -35,7 +35,7 @@ export function Navbar() {
             </a>
             <div className="flex space-x-4">
               <Button 
-                className="bg-gradient-to-r from-[#5865F2] to-[#4752c4] hover:bg-gradient-to-r hover:from-[#4752c4] hover:to-[#3a44b1] border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg"
+                className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg"
                 asChild
               >
                 <a href="https://discord.com/api/oauth2/authorize" target="_blank" rel="noopener noreferrer">
@@ -98,7 +98,7 @@ export function Navbar() {
             </a>
             <div className="flex flex-col space-y-3 pt-2">
               <Button 
-                className="bg-gradient-to-r from-[#5865F2] to-[#4752c4] hover:bg-gradient-to-r hover:from-[#4752c4] hover:to-[#3a44b1] border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg w-full"
+                className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg w-full"
                 asChild
               >
                 <a href="https://discord.com/api/oauth2/authorize" target="_blank" rel="noopener noreferrer">

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 export function CTASection() {
   return (
     <section className="py-20 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#5865F2]/30 to-pink-500/30 opacity-50"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-gray-500/20 opacity-30"></div>
       <div className="absolute inset-0 backdrop-blur-[100px]"></div>
       <div className="container mx-auto px-4 relative z-10">
         <motion.div 
@@ -23,7 +23,7 @@ export function CTASection() {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button 
               size="lg"
-              className="bg-gradient-to-r from-[#5865F2] to-[#4752c4] hover:bg-gradient-to-r hover:from-[#4752c4] hover:to-[#3a44b1] border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg shadow-lg shadow-[#5865F2]/20"
+              className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg shadow-lg shadow-white/20"
               asChild
             >
               <a href="https://discord.com/api/oauth2/authorize" target="_blank" rel="noopener noreferrer">
@@ -33,7 +33,7 @@ export function CTASection() {
             <Button 
               size="lg"
               variant="outline" 
-              className="gradient-border transition-transform hover:-translate-y-0.5 hover:shadow-lg backdrop-blur-sm shadow-lg shadow-pink-500/10"
+              className="gradient-border transition-transform hover:-translate-y-0.5 hover:shadow-lg backdrop-blur-sm shadow-lg shadow-white/10"
               asChild
             >
               <a href="https://discord.gg/essencesupport" target="_blank" rel="noopener noreferrer">

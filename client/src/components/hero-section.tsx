@@ -23,7 +23,7 @@ export function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg"
-                className="bg-gradient-to-r from-[#5865F2] to-[#4752c4] hover:bg-gradient-to-r hover:from-[#4752c4] hover:to-[#3a44b1] border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg"
+                className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg"
                 asChild
               >
                 <a href="https://discord.com/api/oauth2/authorize" target="_blank" rel="noopener noreferrer">
@@ -49,7 +49,7 @@ export function HeroSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#5865F2] via-pink-500 to-[#5865F2] rounded-lg blur opacity-30 animate-pulse"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-white via-gray-500 to-white rounded-lg blur opacity-20 animate-pulse"></div>
               <div className="relative bg-gray-900/80 backdrop-blur-sm rounded-lg overflow-hidden border border-gray-700/50">
                 <div className="aspect-video bg-gradient-to-br from-gray-800/80 to-gray-900/80 flex items-center justify-center text-gray-600">
                   <svg className="w-24 h-24 opacity-30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

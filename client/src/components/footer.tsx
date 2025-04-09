@@ -39,13 +39,13 @@ export function Footer() {
             <div className="col-span-2 sm:col-span-1">
               <h3 className="text-white font-semibold mb-4">Connect</h3>
               <div className="flex space-x-4">
-                <a href="https://discord.gg/essencesupport" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#5865F2] transition-colors hover:scale-110 transform">
+                <a href="https://discord.gg/essencesupport" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform">
                   <DiscordIcon />
                 </a>
                 <a href="https://github.com/essence-bot" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform">
                   <GitHubIcon />
                 </a>
-                <a href="https://twitter.com/essencebot" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-500 transition-colors hover:scale-110 transform">
+                <a href="https://twitter.com/essencebot" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors hover:scale-110 transform">
                   <TwitterIcon />
                 </a>
               </div>

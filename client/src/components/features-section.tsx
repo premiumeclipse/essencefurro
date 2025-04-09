@@ -10,32 +10,32 @@ import { motion } from "framer-motion";
 
 const features = [
   {
-    icon: <CloudLightning className="h-6 w-6 text-[#5865F2]" />,
+    icon: <CloudLightning className="h-6 w-6 text-white" />,
     title: "Advanced Moderation",
     description: "Powerful tools to keep your server safe. Ban, kick, mute, and more with customizable auto-mod features."
   },
   {
-    icon: <Music className="h-6 w-6 text-pink-500" />,
+    icon: <Music className="h-6 w-6 text-white" />,
     title: "Music Player",
     description: "High-quality music playback from YouTube, Spotify, and SoundCloud with playlist support and DJ controls."
   },
   {
-    icon: <SmilePlus className="h-6 w-6 text-[#5865F2]" />,
+    icon: <SmilePlus className="h-6 w-6 text-white" />,
     title: "Fun & Games",
     description: "Keep your server entertained with memes, jokes, trivia, and mini-games that members can play together."
   },
   {
-    icon: <Bell className="h-6 w-6 text-pink-500" />,
+    icon: <Bell className="h-6 w-6 text-white" />,
     title: "Custom Notifications",
     description: "Set up custom notifications for your server, including welcome messages, level-ups, and event announcements."
   },
   {
-    icon: <BarChart2 className="h-6 w-6 text-[#5865F2]" />,
+    icon: <BarChart2 className="h-6 w-6 text-white" />,
     title: "Server Analytics",
     description: "Get detailed insights into your server's activity, member engagement, and growth with easy-to-read charts."
   },
   {
-    icon: <Paintbrush className="h-6 w-6 text-pink-500" />,
+    icon: <Paintbrush className="h-6 w-6 text-white" />,
     title: "Custom Themes",
     description: "Personalize your bot's appearance and responses with custom themes, colors, and message styles."
   }
@@ -94,7 +94,7 @@ export function FeaturesSection() {
               className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800/40 flex flex-col h-full transition-all duration-300 card-gradient-hover hover:-translate-y-1 hover:shadow-lg hover:shadow-[#5865F2]/5"
               variants={item}
             >
-              <div className="rounded-full bg-gradient-to-br from-[#5865F2]/20 to-pink-500/20 p-3 w-12 h-12 flex items-center justify-center mb-4">
+              <div className="rounded-full bg-gradient-to-br from-white/10 to-gray-500/10 p-3 w-12 h-12 flex items-center justify-center mb-4">
                 {feature.icon}
               </div>
               <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
