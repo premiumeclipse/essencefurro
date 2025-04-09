@@ -1,5 +1,34 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
+// Check if we're in production (Netlify) or development environment
+const isNetlify = import.meta.env.PROD;
+
+// Transform API URLs for Netlify Functions if needed
+function transformUrl(url: string): string {
+  if (!isNetlify) return url; // Use the original URL in development
+  
+  // Transform API URLs to use Netlify Functions format
+  if (url.startsWith('/api/')) {
+    // Replace /api/ with /.netlify/functions/
+    const endpoint = url.replace('/api/', '');
+    
+    // Handle special cases for nested paths
+    if (endpoint.includes('/')) {
+      // For paths like /api/incidents/all or /api/incidents/1
+      const parts = endpoint.split('/');
+      if (parts.length >= 2) {
+        // We'll handle the logic in the function itself based on the path
+        return `/.netlify/functions/${parts[0]}`;
+      }
+    }
+    
+    // For simple paths like /api/stats
+    return `/.netlify/functions/${endpoint}`;
+  }
+  
+  return url;
+}
+
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
@@ -13,8 +42,11 @@ export async function apiRequest(
   data?: unknown | undefined,
 ): Promise<Response> {
   try {
-    console.log(`Making ${method} request to ${url}`, data);
-    const res = await fetch(url, {
+    // Transform the URL if needed for Netlify
+    const transformedUrl = transformUrl(url);
+    
+    console.log(`Making ${method} request to ${transformedUrl}`, data);
+    const res = await fetch(transformedUrl, {
       method,
       headers: data ? { "Content-Type": "application/json" } : {},
       body: data ? JSON.stringify(data) : undefined,
@@ -22,7 +54,7 @@ export async function apiRequest(
     });
     
     // Log the response status
-    console.log(`Response from ${url}:`, res.status);
+    console.log(`Response from ${transformedUrl}:`, res.status);
     
     if (!res.ok) {
       // Try to get the error message from the response
@@ -47,7 +79,10 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey[0] as string, {
+    // Transform the URL if it's the first item in queryKey and it's a string
+    const url = typeof queryKey[0] === 'string' ? transformUrl(queryKey[0]) : queryKey[0];
+    
+    const res = await fetch(url as string, {
       credentials: "include",
     });
 

@@ -31,7 +31,11 @@ export function StatusSection() {
         setLoading(true);
         console.log('Fetching public incidents...');
         
-        const response = await fetch('/api/incidents');
+        // Check if we're in production (Netlify) or development
+        const isProduction = import.meta.env.PROD;
+        const url = isProduction ? '/.netlify/functions/incidents' : '/api/incidents';
+        
+        const response = await fetch(url);
         console.log('Incidents response status:', response.status);
         
         let data = [];
@@ -204,7 +208,7 @@ export function StatusSection() {
               className="text-gray-400 hover:text-white text-sm inline-flex items-center transition-colors"
             >
               <Shield className="h-4 w-4 mr-1" /> 
-              View status page
+              View status page (Dev Tools)
             </a>
           </div>
         </motion.div>

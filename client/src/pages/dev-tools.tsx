@@ -102,7 +102,10 @@ export default function DevTools() {
   const refreshIncidents = async () => {
     try {
       console.log('Refreshing incidents list...');
-      const response = await fetch('/api/incidents/all');
+      const isProduction = import.meta.env.PROD;
+      const url = isProduction ? '/.netlify/functions/incidents/all' : '/api/incidents/all';
+      
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         console.log('Refreshed incidents data:', data);
@@ -130,7 +133,11 @@ export default function DevTools() {
     }
 
     try {
-      const response = await fetch('/api/incidents', {
+      // Check if we're in production (Netlify) or development
+      const isProduction = import.meta.env.PROD;
+      const url = isProduction ? '/.netlify/functions/incidents' : '/api/incidents';
+      
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -176,7 +183,13 @@ export default function DevTools() {
     if (!editableIncident) return;
 
     try {
-      const response = await fetch(`/api/incidents/${editableIncident.id}`, {
+      // Check if we're in production (Netlify) or development
+      const isProduction = import.meta.env.PROD;
+      const url = isProduction 
+        ? `/.netlify/functions/incidents/${editableIncident.id}` 
+        : `/api/incidents/${editableIncident.id}`;
+      
+      const response = await fetch(url, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -225,7 +238,11 @@ export default function DevTools() {
   // Update bot stats
   const updateBotStats = async () => {
     try {
-      const response = await fetch('/api/stats', {
+      // Check if we're in production (Netlify) or development
+      const isProduction = import.meta.env.PROD;
+      const url = isProduction ? '/.netlify/functions/stats' : '/api/stats';
+      
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
