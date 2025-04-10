@@ -1,124 +1,142 @@
-# Essence Discord Bot Landing Page
+# essence Discord Bot & Dashboard
 
-A sleek, modern landing page for the Essence Discord Bot with admin tools for managing status updates and incidents, plus a real-time user dashboard that connects to your Python Discord bot.
+A comprehensive Discord bot with a web dashboard for server management, moderation, and more.
 
 ## Features
 
-- Elegant black and white design with gradient effects
-- Responsive mobile-first layout
-- Status section to display bot operational status
-- Commands showcase with categorized display
-- Administrative tools for managing bot statistics and incident reporting
-- Interactive UI with animations
-- **NEW**: User dashboard with WebSocket connection to your Discord bot
+- 🤖 **Discord Bot**: Prefix-based commands for moderation, fun, and utility
+- 🌐 **Web Dashboard**: Manage your bot settings through an intuitive web interface
+- 🛡️ **Auto-Moderation**: Automatic spam, invite, and inappropriate content filtering
+- 🔨 **Moderation Tools**: Comprehensive tools for server management
+- 🎮 **Fun Commands**: Engage your community with interactive commands
 
-## Tech Stack
+## Dashboard
 
-- React.js + TypeScript
-- Tailwind CSS for styling
-- Vite for frontend bundling and development
-- Express.js backend (in development) or Netlify serverless functions (in production)
-- Framer Motion for animations
-- WebSocket for real-time communication with your bot
+The essence dashboard allows server admins to:
 
-## Deployment on Netlify
+- Configure bot settings for each server
+- Manage auto-moderation rules
+- View moderation logs
+- Create custom commands
+- Monitor server stats
 
-This project is set up to be easily deployed on Netlify using their serverless functions.
+## Prerequisites
 
-### Deployment Steps
+- Node.js 16+ (for the dashboard)
+- Python 3.8+ (for the bot)
+- PostgreSQL database
 
-1. Fork or clone this repository
-2. Connect your repository to Netlify
-3. Set up the following build settings:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-   - Node version: 18.x or later
+## Setup Instructions
 
-4. Deploy! Netlify will automatically handle the serverless functions setup based on the `netlify.toml` configuration.
+### Dashboard Setup
 
-### Development
+1. Clone this repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Configure environment variables:
+   ```
+   cp .env.example .env
+   ```
+   Edit `.env` with your PostgreSQL connection details and Discord OAuth credentials
 
-To run the project locally:
+4. Setup the database:
+   ```
+   npm run db:push
+   ```
 
-```bash
-# Install dependencies
-npm install
+5. Start the dashboard:
+   ```
+   npm run dev
+   ```
 
-# Start the development server
-npm run dev
-```
+### Bot Setup
 
-### Admin Access
+1. Install Python dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
 
-The admin dashboard is accessible at `/dev-tools` with the password: `essence@2025furry`
+2. Configure environment variables:
+   ```
+   cp .env.example .env.bot
+   ```
+   Edit `.env.bot` with your Discord bot token and dashboard connection details
 
-## Connecting Your Python Discord Bot to the Dashboard
+3. Start the bot:
+   ```
+   python bot.py
+   ```
 
-The website includes a real-time user dashboard that can communicate with your Discord bot. Follow these steps to connect your Python bot:
+## Bot Commands
 
-### 1. WebSocket Communication
+The bot includes several command categories:
 
-The dashboard uses WebSocket for real-time communication with your bot. There's a WebSocket server endpoint at `/ws` that your bot can connect to.
+### General Commands
+- `>help` - Shows help information
+- `>ping` - Check bot latency
+- `>info` - Display bot information
+- `>serverinfo` - Display server information
+- `>invite` - Get bot invite link
+- `>dashboard` - Get dashboard link
 
-### 2. Python Code Example
+### Moderation Commands
+- `>purge [amount] [user]` - Delete messages
+- `>kick [user] [reason]` - Kick a user
+- `>ban [user] [reason]` - Ban a user
+- `>unban [user_id] [reason]` - Unban a user
+- `>mute [user] [duration] [reason]` - Timeout a user
+- `>unmute [user] [reason]` - Remove a timeout
+- `>warn [user] [reason]` - Warn a user
+- `>slowmode [seconds]` - Set channel slowmode
+- `>role add/remove/list` - Manage roles
 
-We've included an example Python script (`example_bot_connection.py`) that shows how to connect a Discord.py bot to the dashboard. Main features:
+### Fun Commands
+- `>uwu [text]` - UwU-ify text or send a random uwu message
+- `>choose [options]` - Choose between options
+- `>8ball [question]` - Ask the magic 8-ball
+- `>roll [dice]` - Roll dice
+- `>coin` - Flip a coin
+- `>hug [user]` - Give someone a hug
+- `>pat [user]` - Pat someone on the head
+- `>avatar [user]` - Show a user's avatar
 
-- WebSocket connection with authentication
-- Regular heartbeats to maintain connection
-- Stats reporting (server count, user count, etc.)
-- Command processing from dashboard to bot
-- Error handling and reconnection logic
+### AutoMod Commands
+- `>automod enable/disable` - Enable/disable automod
+- `>automod invites enable/disable` - Configure invite filtering
+- `>automod log [channel]` - Set the log channel
 
-### 3. Authentication
+## Adding New Features
 
-Your bot needs to authenticate with the dashboard using a token:
+### Adding Bot Commands
+
+To add new commands, create a new file in the `cogs` directory or add to an existing cog:
 
 ```python
-# In your bot code:
-auth_payload = {
-    "type": "auth",
-    "token": "essence_bot_secret_token",  # This token is defined in server/routes.ts
-    "isBot": True
-}
-await ws_connection.send(json.dumps(auth_payload))
+@commands.command(name="command_name")
+async def command_name(self, ctx, *args):
+    """Command description for help command"""
+    # Command implementation
+    await ctx.send("Response")
 ```
 
-### 4. Required Dependencies
+### Adding Dashboard Features
 
-Your Python bot will need:
-```
-pip install discord.py websockets
-```
+To add new dashboard features:
 
-### 5. Message Protocol
-
-Communication between the dashboard and your bot follows this protocol:
-
-| Message Type | Direction | Purpose |
-|--------------|-----------|---------|
-| `auth` | Bot → Dashboard | Authenticate the bot |
-| `heartbeat` | Bot → Dashboard | Keep connection alive |
-| `bot_stats` | Bot → Dashboard | Update dashboard with bot stats |
-| `command_request` | Dashboard → Bot | User executed a command |
-| `command_response` | Bot → Dashboard | Response to user command |
-
-### 6. Dashboard Features
-
-Once connected, users will be able to:
-- See real-time bot stats
-- Send commands to your bot directly from the dashboard
-- View the bot's online/offline status
-- See active users with your bot
-
-## Project Structure
-
-- `/client` - Frontend React application
-- `/server` - Express server for local development
-- `/functions` - Netlify serverless functions for production
-- `/shared` - Shared TypeScript types and utilities
-- `example_bot_connection.py` - Example Python code for connecting your bot
+1. Define database models in `shared/schema.ts`
+2. Create API endpoints in `server/routes.ts`
+3. Add UI components in `client/src/pages/` or `client/src/components/`
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgements
+
+- [Discord.js](https://discord.js.org/) - The API wrapper for Discord
+- [discord.py](https://discordpy.readthedocs.io/) - Python API wrapper for Discord
+- [React](https://reactjs.org/) - Frontend library
+- [TailwindCSS](https://tailwindcss.com/) - CSS framework
+- [shadcn/ui](https://ui.shadcn.com/) - UI component library
