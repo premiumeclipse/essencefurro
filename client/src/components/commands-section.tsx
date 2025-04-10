@@ -2,7 +2,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
-type CommandCategory = "moderation" | "music" | "fun" | "utility" | "settings";
+type CommandCategory = "moderation" | "music" | "economy" | "utility" | "settings";
 
 interface Command {
   name: string;
@@ -76,37 +76,13 @@ const commands: Record<CommandCategory, Command[]> = {
       example: ">stop"
     }
   ],
-  fun: [
+  economy: [
     {
       name: ">meme",
       description: "Sends a random meme",
       usage: ">meme [category]",
       example: ">meme dank"
     },
-    {
-      name: ">trivia",
-      description: "Starts a trivia game",
-      usage: ">trivia [category] [difficulty]",
-      example: ">trivia gaming medium"
-    },
-    {
-      name: ">8ball",
-      description: "Ask the magic 8ball a question",
-      usage: ">8ball question",
-      example: ">8ball Will I win the lottery?"
-    },
-    {
-      name: ">joke",
-      description: "Tells a random joke",
-      usage: ">joke [category]",
-      example: ">joke dad"
-    },
-    {
-      name: ">emoji",
-      description: "Displays a large version of an emoji",
-      usage: ">emoji emoji",
-      example: ">emoji 😂"
-    }
   ],
   utility: [
     {
