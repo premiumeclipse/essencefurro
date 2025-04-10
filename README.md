@@ -1,142 +1,62 @@
-# essence Discord Bot & Dashboard
+# Essence Discord Bot Landing Page
 
-A comprehensive Discord bot with a web dashboard for server management, moderation, and more.
+A sleek, modern landing page for the Essence Discord Bot with admin tools for managing status updates and incidents.
 
 ## Features
 
-- 🤖 **Discord Bot**: Prefix-based commands for moderation, fun, and utility
-- 🌐 **Web Dashboard**: Manage your bot settings through an intuitive web interface
-- 🛡️ **Auto-Moderation**: Automatic spam, invite, and inappropriate content filtering
-- 🔨 **Moderation Tools**: Comprehensive tools for server management
-- 🎮 **Fun Commands**: Engage your community with interactive commands
+- Elegant black and white design with gradient effects
+- Responsive mobile-first layout
+- Status section to display bot operational status
+- Commands showcase with categorized display
+- Administrative tools for managing bot statistics and incident reporting
+- Interactive UI with animations
 
-## Dashboard
+## Tech Stack
 
-The essence dashboard allows server admins to:
+- React.js + TypeScript
+- Tailwind CSS for styling
+- Vite for frontend bundling and development
+- Express.js backend (in development) or Netlify serverless functions (in production)
+- Framer Motion for animations
 
-- Configure bot settings for each server
-- Manage auto-moderation rules
-- View moderation logs
-- Create custom commands
-- Monitor server stats
+## Deployment on Netlify
 
-## Prerequisites
+This project is set up to be easily deployed on Netlify using their serverless functions.
 
-- Node.js 16+ (for the dashboard)
-- Python 3.8+ (for the bot)
-- PostgreSQL database
+### Deployment Steps
 
-## Setup Instructions
+1. Fork or clone this repository
+2. Connect your repository to Netlify
+3. Set up the following build settings:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+   - Node version: 18.x or later
 
-### Dashboard Setup
+4. Deploy! Netlify will automatically handle the serverless functions setup based on the `netlify.toml` configuration.
 
-1. Clone this repository
-2. Install dependencies:
-   ```
-   npm install
-   ```
-3. Configure environment variables:
-   ```
-   cp .env.example .env
-   ```
-   Edit `.env` with your PostgreSQL connection details and Discord OAuth credentials
+### Development
 
-4. Setup the database:
-   ```
-   npm run db:push
-   ```
+To run the project locally:
 
-5. Start the dashboard:
-   ```
-   npm run dev
-   ```
+```bash
+# Install dependencies
+npm install
 
-### Bot Setup
-
-1. Install Python dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-
-2. Configure environment variables:
-   ```
-   cp .env.example .env.bot
-   ```
-   Edit `.env.bot` with your Discord bot token and dashboard connection details
-
-3. Start the bot:
-   ```
-   python bot.py
-   ```
-
-## Bot Commands
-
-The bot includes several command categories:
-
-### General Commands
-- `>help` - Shows help information
-- `>ping` - Check bot latency
-- `>info` - Display bot information
-- `>serverinfo` - Display server information
-- `>invite` - Get bot invite link
-- `>dashboard` - Get dashboard link
-
-### Moderation Commands
-- `>purge [amount] [user]` - Delete messages
-- `>kick [user] [reason]` - Kick a user
-- `>ban [user] [reason]` - Ban a user
-- `>unban [user_id] [reason]` - Unban a user
-- `>mute [user] [duration] [reason]` - Timeout a user
-- `>unmute [user] [reason]` - Remove a timeout
-- `>warn [user] [reason]` - Warn a user
-- `>slowmode [seconds]` - Set channel slowmode
-- `>role add/remove/list` - Manage roles
-
-### Fun Commands
-- `>uwu [text]` - UwU-ify text or send a random uwu message
-- `>choose [options]` - Choose between options
-- `>8ball [question]` - Ask the magic 8-ball
-- `>roll [dice]` - Roll dice
-- `>coin` - Flip a coin
-- `>hug [user]` - Give someone a hug
-- `>pat [user]` - Pat someone on the head
-- `>avatar [user]` - Show a user's avatar
-
-### AutoMod Commands
-- `>automod enable/disable` - Enable/disable automod
-- `>automod invites enable/disable` - Configure invite filtering
-- `>automod log [channel]` - Set the log channel
-
-## Adding New Features
-
-### Adding Bot Commands
-
-To add new commands, create a new file in the `cogs` directory or add to an existing cog:
-
-```python
-@commands.command(name="command_name")
-async def command_name(self, ctx, *args):
-    """Command description for help command"""
-    # Command implementation
-    await ctx.send("Response")
+# Start the development server
+npm run dev
 ```
 
-### Adding Dashboard Features
+### Admin Access
 
-To add new dashboard features:
+The admin dashboard is accessible at `/dev-tools` with the password: `essence@2025furry`
 
-1. Define database models in `shared/schema.ts`
-2. Create API endpoints in `server/routes.ts`
-3. Add UI components in `client/src/pages/` or `client/src/components/`
+## Project Structure
+
+- `/client` - Frontend React application
+- `/server` - Express server for local development
+- `/functions` - Netlify serverless functions for production
+- `/shared` - Shared TypeScript types and utilities
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgements
-
-- [Discord.js](https://discord.js.org/) - The API wrapper for Discord
-- [discord.py](https://discordpy.readthedocs.io/) - Python API wrapper for Discord
-- [React](https://reactjs.org/) - Frontend library
-- [TailwindCSS](https://tailwindcss.com/) - CSS framework
-- [shadcn/ui](https://ui.shadcn.com/) - UI component library
+MIT

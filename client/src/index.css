@@ -43,25 +43,4 @@
     background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.05), rgba(100, 100, 100, 0.05));
     background-position: 100% 100%;
   }
-  
-  /* Custom scrollbar for dashboard */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(20, 20, 20, 0.2);
-    border-radius: 3px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(120, 120, 140, 0.4);
-    border-radius: 3px;
-    transition: all 0.3s ease;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(150, 150, 170, 0.6);
-  }
 }

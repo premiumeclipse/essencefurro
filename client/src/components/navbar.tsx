@@ -1,176 +1,105 @@
-import { useAuth } from "@/hooks/use-auth";
-import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
 import { useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Loader2, User, LogOut, Menu, X } from "lucide-react";
+import { Link } from "wouter";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function Navbar() {
-  const { user, logoutMutation } = useAuth();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleLogout = () => {
-    logoutMutation.mutate();
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <nav className="bg-black border-b border-gray-800 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          {/* Logo and desktop navigation */}
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <Link href="/">
-                <a className="text-white font-bold text-xl">essence</a>
-              </Link>
-            </div>
-            
-            {/* Desktop nav links */}
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-4 items-center">
-              <Link href="/">
-                <a className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                  Home
-                </a>
-              </Link>
-              
-              {user && (
-                <Link href="/dashboard">
-                  <a className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                    Dashboard
-                  </a>
-                </Link>
-              )}
-              
-              <Link href="/#features">
-                <a className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                  Features
-                </a>
-              </Link>
-              
-              <Link href="/#commands">
-                <a className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                  Commands
-                </a>
-              </Link>
-            </div>
-          </div>
+    <header className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 border-b border-gray-800/50">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center py-4">
+          <Link href="/" className="text-2xl font-bold text-white flex items-center">
+            <span className="gradient-text">e</span>ssence
+          </Link>
           
-          {/* Profile section */}
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white">
-                    <User className="h-5 w-5 mr-2" />
-                    {user.username}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard">
-                      <a className="w-full cursor-pointer">Dashboard</a>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem 
-                    className="text-red-600 cursor-pointer"
-                    onClick={handleLogout} 
-                    disabled={logoutMutation.isPending}
-                  >
-                    {logoutMutation.isPending ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Logging out...
-                      </>
-                    ) : (
-                      <>
-                        <LogOut className="mr-2 h-4 w-4" />
-                        Log out
-                      </>
-                    )}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Link href="/auth">
-                <Button className="bg-indigo-600 hover:bg-indigo-700">
-                  Login
-                </Button>
-              </Link>
-            )}
-          </div>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="#home" className="text-gray-300 hover:text-white hover:scale-105 transition-all">
+              Home
+            </a>
+            <a href="#features" className="text-gray-300 hover:text-white hover:scale-105 transition-all">
+              Features
+            </a>
+            <a href="#commands" className="text-gray-300 hover:text-white hover:scale-105 transition-all">
+              Commands
+            </a>
+            <a href="#stats" className="text-gray-300 hover:text-white hover:scale-105 transition-all">
+              Stats
+            </a>
+            <div>
+              <Button 
+                className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg"
+                asChild
+              >
+                <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands&redirect_uri=https://YOUR_DOMAIN/thank-you" target="_blank" rel="noopener noreferrer">
+                  Add Bot
+                </a>
+              </Button>
+            </div>
+          </nav>
           
-          {/* Mobile menu button */}
-          <div className="flex items-center sm:hidden">
-            <button
-              type="button"
-              className="text-gray-400 hover:text-white"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          {/* Mobile Menu Button */}
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="md:hidden text-gray-300 hover:text-white"
+            onClick={toggleMenu}
+          >
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
+        </div>
+        
+        {/* Mobile Navigation */}
+        <div className={cn("md:hidden pb-4", isMenuOpen ? "block" : "hidden")}>
+          <div className="flex flex-col space-y-4">
+            <a 
+              href="#home" 
+              className="text-gray-300 hover:text-white transition-colors py-2"
+              onClick={toggleMenu}
             >
-              {mobileMenuOpen ? (
-                <X className="block h-6 w-6" />
-              ) : (
-                <Menu className="block h-6 w-6" />
-              )}
-            </button>
+              Home
+            </a>
+            <a 
+              href="#features" 
+              className="text-gray-300 hover:text-white transition-colors py-2"
+              onClick={toggleMenu}
+            >
+              Features
+            </a>
+            <a 
+              href="#commands" 
+              className="text-gray-300 hover:text-white transition-colors py-2"
+              onClick={toggleMenu}
+            >
+              Commands
+            </a>
+            <a 
+              href="#stats" 
+              className="text-gray-300 hover:text-white transition-colors py-2"
+              onClick={toggleMenu}
+            >
+              Stats
+            </a>
+            <div className="flex flex-col pt-2">
+              <Button 
+                className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg w-full"
+                asChild
+              >
+                <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands&redirect_uri=https://YOUR_DOMAIN/thank-you" target="_blank" rel="noopener noreferrer">
+                  Add Bot
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Mobile menu, show/hide based on menu state */}
-      {mobileMenuOpen && (
-        <div className="sm:hidden bg-gray-900 border-t border-gray-800">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link href="/">
-              <a className="text-gray-300 hover:bg-gray-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                Home
-              </a>
-            </Link>
-            
-            {user && (
-              <Link href="/dashboard">
-                <a className="text-gray-300 hover:bg-gray-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                  Dashboard
-                </a>
-              </Link>
-            )}
-            
-            <Link href="/#features">
-              <a className="text-gray-300 hover:bg-gray-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                Features
-              </a>
-            </Link>
-            
-            <Link href="/#commands">
-              <a className="text-gray-300 hover:bg-gray-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                Commands
-              </a>
-            </Link>
-            
-            {user ? (
-              <button
-                onClick={handleLogout}
-                disabled={logoutMutation.isPending}
-                className="w-full text-left text-red-500 hover:bg-gray-800 hover:text-red-400 block px-3 py-2 rounded-md text-base font-medium"
-              >
-                {logoutMutation.isPending ? "Logging out..." : "Log out"}
-              </button>
-            ) : (
-              <Link href="/auth">
-                <a className="bg-indigo-600 hover:bg-indigo-700 text-white block px-3 py-2 rounded-md text-base font-medium">
-                  Login
-                </a>
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
-    </nav>
+    </header>
   );
 }
