@@ -33,6 +33,9 @@ export function Navbar() {
             <a href="#stats" className="text-gray-300 hover:text-white hover:scale-105 transition-all">
               Stats
             </a>
+            <Link href="/dashboard" className="text-gray-300 hover:text-white hover:scale-105 transition-all px-3 py-1 bg-gray-800/50 rounded-full border border-gray-700/50">
+              Dashboard
+            </Link>
             <div>
               <Button 
                 className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg"
@@ -87,6 +90,13 @@ export function Navbar() {
             >
               Stats
             </a>
+            <Link 
+              href="/dashboard" 
+              className="text-gray-300 hover:text-white transition-colors py-2 px-3 bg-gray-800/50 rounded-md border border-gray-700/50 mb-2"
+              onClick={toggleMenu}
+            >
+              Dashboard
+            </Link>
             <div className="flex flex-col pt-2">
               <Button 
                 className="bg-gradient-to-r from-white to-gray-300 hover:bg-gradient-to-r hover:from-gray-300 hover:to-gray-400 text-black border-none transition-transform hover:-translate-y-0.5 hover:shadow-lg w-full"

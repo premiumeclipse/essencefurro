@@ -71,8 +71,18 @@ export default function Dashboard() {
     setUsername(mockUsername);
   }, []);
   
+  // Bot status interface
+  interface BotStatusData {
+    isOnline: boolean;
+    uptime: number;
+    lastHeartbeat: string;
+    connectedServers: number;
+    activeUsers: number;
+    commandsProcessed: number;
+  }
+
   // Bot status query
-  const { data: botStatus, isLoading: isBotStatusLoading } = useQuery({ 
+  const { data: botStatus, isLoading: isBotStatusLoading } = useQuery<BotStatusData>({ 
     queryKey: ['/api/bot/status'],
     refetchInterval: 15000
   });
