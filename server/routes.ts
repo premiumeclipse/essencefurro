@@ -1,9 +1,10 @@
-import type { Express, Request, Response } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertBotStatsSchema } from "@shared/schema";
 import { z } from "zod";
 import { WebSocketServer, WebSocket } from 'ws';
+import { setupAuth } from "./auth";
 
 // For demonstration, we'll store incidents in memory
 let incidents = [
@@ -28,6 +29,9 @@ let incidents = [
 ];
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Setup authentication
+  setupAuth(app);
+
   // API endpoint to get bot stats
   app.get("/api/stats", async (req, res) => {
     try {
