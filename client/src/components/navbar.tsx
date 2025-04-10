@@ -33,8 +33,11 @@ export function Navbar() {
             <a href="#stats" className="text-gray-300 hover:text-white hover:scale-105 transition-all">
               Stats
             </a>
-            <Link href="/dashboard" className="text-gray-300 hover:text-white hover:scale-105 transition-all px-3 py-1 bg-gray-800/50 rounded-full border border-gray-700/50">
-              Dashboard
+            <Link href="/dashboard" className="text-gray-300 hover:text-white hover:scale-105 transition-all px-3 py-1 bg-gray-800/50 rounded-full border border-gray-700/50 mr-2">
+              Simple Dashboard
+            </Link>
+            <Link href="/carlbot-dashboard" className="text-gray-300 hover:text-white hover:scale-105 transition-all px-3 py-1 bg-indigo-800/70 rounded-full border border-indigo-700/50">
+              Carl-Bot Dashboard
             </Link>
             <div>
               <Button 
@@ -95,7 +98,14 @@ export function Navbar() {
               className="text-gray-300 hover:text-white transition-colors py-2 px-3 bg-gray-800/50 rounded-md border border-gray-700/50 mb-2"
               onClick={toggleMenu}
             >
-              Dashboard
+              Simple Dashboard
+            </Link>
+            <Link 
+              href="/carlbot-dashboard" 
+              className="text-gray-300 hover:text-white transition-colors py-2 px-3 bg-indigo-800/70 rounded-md border border-indigo-700/50 mb-2"
+              onClick={toggleMenu}
+            >
+              Carl-Bot Dashboard
             </Link>
             <div className="flex flex-col pt-2">
               <Button 

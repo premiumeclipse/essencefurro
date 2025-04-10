@@ -7,6 +7,7 @@ import Home from "@/pages/home";
 import ThankYou from "@/pages/thank-you";
 import DevTools from "@/pages/dev-tools";
 import Dashboard from "@/pages/dashboard";
+import CarlBotDashboard from "@/pages/carlbot-dashboard";
 
 function Router() {
   return (
@@ -15,6 +16,7 @@ function Router() {
       <Route path="/thank-you" component={ThankYou} />
       <Route path="/dev-tools" component={DevTools} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/carlbot-dashboard" component={CarlBotDashboard} />
       <Route component={NotFound} />
     </Switch>
   );
