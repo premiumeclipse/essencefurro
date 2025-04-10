@@ -56,6 +56,7 @@ export const guilds = pgTable("guilds", {
     logChannelId: string | null;
     autoRoleId: string | null;
     muteRoleId: string | null;
+    prefix: string;
   }>(),
 });
 

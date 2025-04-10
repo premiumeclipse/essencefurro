@@ -48,7 +48,8 @@ const mockGuilds: Partial<Guild>[] = [
       welcomeChannelId: '123456789012345679',
       logChannelId: '123456789012345680',
       autoRoleId: '123456789012345681',
-      muteRoleId: '123456789012345682'
+      muteRoleId: '123456789012345682',
+      prefix: '>'
     }
   },
   {
@@ -64,7 +65,8 @@ const mockGuilds: Partial<Guild>[] = [
       welcomeChannelId: null,
       logChannelId: '223456789012345679',
       autoRoleId: null,
-      muteRoleId: '223456789012345680'
+      muteRoleId: '223456789012345680',
+      prefix: '!'
     }
   },
   {
@@ -80,7 +82,8 @@ const mockGuilds: Partial<Guild>[] = [
       welcomeChannelId: '323456789012345679',
       logChannelId: null,
       autoRoleId: '323456789012345680',
-      muteRoleId: null
+      muteRoleId: null,
+      prefix: '-'
     }
   }
 ];
@@ -1101,7 +1104,7 @@ export default function CarlBotDashboard() {
                                   <div className="mr-3">
                                     <Switch 
                                       id={`rule-${rule.id}`}
-                                      checked={rule.enabled}
+                                      checked={rule.enabled || false}
                                       onCheckedChange={() => toggleAutoModRule(rule.id)}
                                       className="data-[state=checked]:bg-indigo-600" 
                                     />
