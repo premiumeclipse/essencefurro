@@ -6,8 +6,10 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import ThankYou from "@/pages/thank-you";
 import DevTools from "@/pages/dev-tools";
-import Dashboard from "@/pages/dashboard";
-import CarlBotDashboard from "@/pages/carlbot-dashboard";
+import Dashboard from "@/pages/carlbot-dashboard"; // Using the Carl-bot style dashboard as main
+import AuthPage from "@/pages/auth-page"; // Auth page for login
+import { AuthProvider } from "@/hooks/use-auth";
+import { ProtectedRoute } from "@/lib/protected-route";
 
 function Router() {
   return (
@@ -15,8 +17,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/thank-you" component={ThankYou} />
       <Route path="/dev-tools" component={DevTools} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="/carlbot-dashboard" component={CarlBotDashboard} />
+      <Route path="/auth" component={AuthPage} />
+      <ProtectedRoute path="/dashboard" component={Dashboard} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -25,8 +27,10 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router />
-      <Toaster />
+      <AuthProvider>
+        <Router />
+        <Toaster />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
